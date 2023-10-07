@@ -1,0 +1,38 @@
+.container{
+   
+}
+.dontshow{
+    display: none;
+}
+.flex-container {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: flex-start; 
+    align-items: flex-start;
+    margin-top: 20px;
+    border: 1px solid black;
+    padding: 10px;
+    
+}
+
+.data-box {
+    flex: 0 0 calc(20% - 20px); /* Set the width of each box to 50% (two boxes in a row) */
+    background-color: white; /* White background for individual boxes */
+    margin: 10px; /* Add margin to separate boxes */
+    padding: 10px; /* Add padding for content inside boxes */
+    border: 2px solid black; /* Add a border around each box */
+}
+.return {
+    background-color: red;
+    display: block;
+    margin: 0 auto; 
+}
+.book-details{
+    border: 2px solid black;
+}
+.pay-button{
+    background-color: green;
+    display: block;
+    margin: 0 auto;
+    width: 2cm;
+}

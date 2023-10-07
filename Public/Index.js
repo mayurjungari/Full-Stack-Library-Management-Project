@@ -1,15 +1,12 @@
 function showreturndata(b_name,b_fine)
 {
     
-        
-        
-        
         const returnDataContainer = document.createElement('div');
         returnDataContainer.className = 'book-details';
         const bookNameElement = document.createElement('p');
         bookNameElement.textContent = `Book Name: ${b_name}`;
         const fineElement = document.createElement('p');
-        fineElement.textContent = `Fine: ${b_fine} INR`; // Display the fine with currency (e.g., INR)
+        fineElement.textContent = `Fine: ${b_fine} INR`; 
         returnDataContainer.appendChild(bookNameElement);
         returnDataContainer.appendChild(fineElement);
         const returnContainer = document.getElementById('returnContainer');
@@ -17,37 +14,32 @@ function showreturndata(b_name,b_fine)
 }
 
 function setreturnIssue() {
-    const ISTCurrentTime = new Date(); 
-    
-    
-    ISTCurrentTime.setMinutes(ISTCurrentTime.getMinutes() + 330);
-    
-    const issueDateFormatted = ISTCurrentTime.toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '');
-    document.getElementById("issuedate").value = issueDateFormatted;
-    
-    ISTCurrentTime.setHours(ISTCurrentTime.getHours() + 1); 
-    const returnDateFormatted = ISTCurrentTime.toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '');
-    document.getElementById("returndate").value = returnDateFormatted;
+    // Get the current time
+    const currentTime = new Date();
+    currentTime.setMinutes(currentTime.getMinutes() + 330);
+    const issueDate = currentTime.toISOString().replace('T', ' ');
+    document.getElementById("issuedate").value = issueDate;
+    currentTime.setHours(currentTime.getHours() + 1);
+    const returnDate = currentTime.toISOString().replace('T', ' ');
+
+    // Set the formatted return date in the "returndate" input field
+    document.getElementById("returndate").value = returnDate;
 }
+
 //------------------------------------------------------------------------------------------------------------------
 
 
 function calculatefine(returndate) {
     const Rdate = new Date(returndate);
+    console.log(Rdate);
+   
     const currentDate = new Date();
-    if((currentDate.getTime)>(Rdate.getTime))
-    {currentDate.setMinutes(currentDate.getMinutes() + 330); // Add 330 minutes for IST
-
-    const hoursLate = currentDate.getHours() - Rdate.getHours();
-    const minutesLate = currentDate.getMinutes() - Rdate.getMinutes();
-
-    // Calculate the total late time in hours and minutes
-    const totalLateHours = hoursLate + minutesLate / 60;
-
-    return Math.max(0, totalLateHours) * 10;
-} 
-    else return 0;
-    // Ensure the minimum fine is 0
+    currentDate.setMinutes(currentDate.getMinutes()+330);
+    console.log(currentDate)
+    const hourlate=(currentDate.getHours()+(currentDate.getMinutes())/60)-(Rdate.getHours()+(Rdate.getMinutes())/60)
+    console.log(hourlate)
+   return Math.round(Math.max(0,hourlate*10));
+   
 }
 
   
@@ -94,27 +86,13 @@ document.addEventListener('DOMContentLoaded', async function () {
                  dataBox.appendChild(payfine);
                  dataBox.appendChild(payButton);
              })
-            //  payButton.addEventListener('click', (event) => {
-            //     const bname = event.target.getAttribute('data-bookname');
-            //     const returndate = event.target.getAttribute('data-returndate');
-            //     const ID=event.target.getAttribute('data-ID')
-            //     const fine = calculatefine(returndate);
-            //     const returnDataContainer = document.createElement('div');
-            //     returnDataContainer.className = 'book-details';
-            //     const bookNameElement = document.createElement('p');
-            //     bookNameElement.textContent = `Book Name: ${bname}`;
-            //     const fineElement = document.createElement('p');
-            //     fineElement.textContent = `Fine: ${fine} INR`; // Display the fine with currency (e.g., INR)
-            //     returnDataContainer.appendChild(bookNameElement);
-            //     returnDataContainer.appendChild(fineElement);
-            //     const returnContainer = document.getElementById('returnContainer');
-            //     returnContainer.appendChild(returnDataContainer);
+           
 
             
 
 
 
-            // });
+           
             payButton.addEventListener('click', async () => {
                 try {
                     const id = item.ID;
